@@ -42,4 +42,47 @@ const registerUser = asyncHandler(async(req, res) => {
 	}
 });
 
-module.exports = { registerUser };
+
+/**
+ * @desc Login user
+ * @route POST /api/users/login
+ * @access public
+ */
+const loginUser = asyncHandler(async(req, res) => {
+
+	const { email, password } = req.body;
+	if (!email || !password) {
+		res.status(400);
+		throw new Error("All fields are mandatory!!");
+	}
+
+	const user = await Users.findOne({ email });
+	
+	// check if user exists and if its password matches:
+	if (user && (await bcrypt.compare(password, user.password))) {
+		
+		const accessToken = jwt.sign(
+			{
+				user: {
+					name: user.name,
+					email: user.email,
+					id: user.id
+				}, 
+			}, 
+			process.env.ACCESS_TOKEN,
+			{ expiresIn: '15m'}
+		);
+
+		console.log(accessToken);
+		res.status(200).json({ accessToken });
+	}
+	else {
+		res.status(401);
+		throw new Error("Username or password is invalid!");
+	}
+
+	// res.json({ message: "Login user!"});
+});
+
+
+module.exports = { registerUser, loginUser };
