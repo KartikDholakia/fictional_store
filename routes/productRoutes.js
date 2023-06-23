@@ -14,8 +14,11 @@ const {
 } = require('../controller/productController');
 
 const { verifyTokenAndAdmin } = require('../middleware/verifyTokenHandler');
+const { paginateResults } = require('../middleware/paginateResults');
 
-router.get('/', getAllProducts);
+const Products = require('../models/productModel');
+
+router.get('/', paginateResults(Products), getAllProducts);
 router.post('/', verifyTokenAndAdmin, createProdcut);
 router.put('/:id', verifyTokenAndAdmin, updateProduct);
 router.delete('/:id', verifyTokenAndAdmin, deleteProduct);

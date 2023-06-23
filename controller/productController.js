@@ -36,13 +36,16 @@ const createProdcut = asyncHandler(async (req, res) => {
 
 
 /**
- * @desc Fetch all prodcuts
- * @route GET /api/products/
+ * @desc Fetch all prodcuts. Pagination is applied
+ * @route GET /api/products/?page=_&limit=_
  * @public
  */
-const getAllProducts = asyncHandler(async (req, res) => {
-	const prodcuts = await Products.find();
-	res.status(200).json(prodcuts);
+const getAllProducts = asyncHandler(async (req, res) => {	
+	// Send the paginated results:
+	res.status(200).json({
+		pagination: req.pagination,
+		// prodcuts: req.pagination.results
+	});
 });
 
 
