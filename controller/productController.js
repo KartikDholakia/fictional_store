@@ -1,7 +1,4 @@
 const asyncHandler = require('express-async-handler');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
 const Products = require('../models/productModel');
 
 
@@ -50,10 +47,31 @@ const getAllProducts = asyncHandler(async (req, res) => {
 
 
 /**
- * @todo
- * Search Product by name
- * Search Product by category
+ * @desc Search a product by name or category 
+ * @route GET /api/products/search?name=__&category=
+ * @public
  */
+const searchProduct = asyncHandler(async (req, res) => {
+	const nameParam = req.query.name;
+	const categoryParam = req.query.category;
+
+	if (typeof nameParam !== 'undefined' && typeof categoryParam !== 'undefined') {
+		const product = await Products.find({ name: nameParam, category: categoryParam });
+		res.status(200).json(product);
+	}
+	else if  (typeof nameParam !== 'undefined') {
+		const product = await Products.find({ name: nameParam });
+		res.status(200).json(product);
+	}
+	else if (typeof categoryParam !== 'undefined') {
+		const product = await Products.find({ category: categoryParam });
+		res.status(200).json(product);
+	}
+	else {
+		res.status(400).json({ message: "Name and category parameter not provided!!"});
+	}
+});
+
 
 
 /**
@@ -104,6 +122,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 module.exports = {
 	createProdcut,
 	getAllProducts,
+	searchProduct,
 	updateProduct,
 	deleteProduct
 };
