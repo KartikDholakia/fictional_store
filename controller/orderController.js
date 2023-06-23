@@ -70,4 +70,16 @@ const placeOrder = asyncHandler(async (req, res) => {
 	res.status(201).json({ message: "Order Placed!", order_details: newOrder });
 });
 
-module.exports = { placeOrder };
+
+/**
+ * @desc Fetch all orders
+ * @route GET /api/order/?page=_&limit=
+ * @public
+ */
+const getAllOrders = asyncHandler(async (req, res) => {
+	res.status(200).json({
+		pagination: req.pagination,
+	});
+});
+
+module.exports = { placeOrder, getAllOrders };
