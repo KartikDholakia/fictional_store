@@ -233,3 +233,59 @@ JWT Access token needs to be passed in the Auth Header.
 | Field | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `id` | String | Id of product |
+
+
+
+## CART
+#
+
+## View User's Cart
+
+### Request 
+`GET /api/cart/` \
+Access: Private \
+Only authorized user can view his own cart.
+
+## Add to Cart
+
+### Request
+`POST /api/cart/` \
+Access: Private \
+Only authorized user can add to his own cart.
+
+### Request Body
+| Field | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `product_id` | String | *Required* |
+| `quantity` | Number | *Default: 1* |
+
+
+
+## ORDER
+#
+
+## Place Order
+
+### Request
+`POST /api/order/` \
+Access: Private \
+The product items and quantity are taken from Cart collections. That is, when a user places an order, all of the items in his cart are sold to him.
+
+### Request Body
+| Field | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `address` | String | *Required* |
+
+
+## Fetch the list of all Orders
+
+### Request
+`GET /api/order/?page=_&limit=` \
+Access: Public \
+Gives paginated results.
+
+### Query Parameters
+| Field | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `page` | Number | Page Number |
+| `limit` | Number | Number of records per page |
