@@ -67,4 +67,169 @@ Create a `.env` file in the root directory and define the following variables:
 It runs your app on `http://localhost:{PORT}`
 
 ---
+ 
+# API Reference
 
+Base URL= `http://localhost:{PORT}\`
+
+## Authentication
+
+#
+
+## Register a new user
+
+### Request 
+`POST /api/users/register`\
+Access: Public
+
+### Request Body
+| Field | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `name` | String | *Required* |
+| `email` | String | *Required*, *unique* |
+| `password` | String | *Required* |
+| `isAdmin` | Boolean | *Default: false* |
+
+### Response
+
+    {
+		"_id": "649684275301652b6652a487",
+  		"email": "harit@gmail.com"
+	}
+
+## Login
+
+### Request 
+`POST /api/users/login` \
+Access: Public
+
+### Request Body
+| Field | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `email` | String | *Required*, *unique* |
+| `password` | String | *Required* |
+
+### Response
+
+    {
+  		"accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJoYXJpdCIsImVtYWlsIjoiaGFyaXRAZ21haWwuY29tIiwiaWQiOiI2NDk2ODQyNzUzMDE2NTJiNjY1MmE0ODcifSwiaWF0IjoxNjg3NTg1OTk5LCJleHAiOjE2ODc1ODY4OTl9.SysrqzzLNlYpeVoiehshETDdDh6F3zmOSvlInXoZJic"
+	}
+
+The above access token expires in 15 min. Means a session lasts only for 15 mins.
+
+
+## CRUD operations on Products
+#
+
+## Create a new Product
+
+### Request 
+`POST /api/products/`\
+Access: Private \
+Only admin can create the product. `verifyTokenAndAdmin` middleware verifies if the logged-in user is admin or not.
+
+### Request Body
+| Field | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `name` | String | *Required*, *Unique* |
+| `description` | String | *Required*, *unique* |
+| `category` | String | *Required* |
+| `price` | Boolean | *Default: false* |
+
+### Response
+
+	{
+		"message": "Product Created!!",
+		"product_info": {
+			"name": "Helix Analog Watch",
+			"description": "Analog watches by Timex",
+			"category": "Watch",
+			"price": 1500,
+			"_id": "64968e7c21f7fe1fcceadf97",
+			"createdAt": "2023-06-24T06:34:36.086Z",
+			"updatedAt": "2023-06-24T06:34:36.086Z",
+			"__v": 0
+		}
+	}
+
+## Fetch List of All Products (Paginated Results)
+### Request 
+`GET /api/products/?page=_&limit=_`\
+Access: Public \
+Gives paginated results
+
+### Query Parameters
+| Field | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `page` | Number | Page Number |
+| `limit` | Number | Number of records per page |
+
+### Response
+
+	{
+		"pagination": {
+			"page": 1,
+			"totalPages": 1,
+			"count": 4,
+			"results": [
+			{
+				"_id": "6495276a2ae507a933f6de79",
+				"name": "The Growth Mindset",
+				"description": "Self-help book by Carol Dweck | Updated by Admin",
+				"category": "Books",
+				"price": 100,
+				"createdAt": "2023-06-23T05:02:34.993Z",
+				"updatedAt": "2023-06-23T06:22:08.936Z",
+				"__v": 0
+			},
+			{
+				"_id": "64968e7c21f7fe1fcceadf97",
+				"name": "Helix Analog Watch",
+				"description": "Analog watches by Timex",
+				"category": "Watch",
+				"price": 1500,
+				"createdAt": "2023-06-24T06:34:36.086Z",
+				"updatedAt": "2023-06-24T06:34:36.086Z",
+				"__v": 0
+			}
+			]
+		}
+	}
+
+
+## Search Products by name or category
+### Request 
+`GET /api/products/search?name=_&category=-`\
+Access: Public \
+
+### Query Parameters
+| Field | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `name` | String | Name of the product |
+| `category` | String | Category of the product |
+
+
+## Update a Product
+### Request 
+`PUT /api/products/:id`\
+Access: Private \
+Only Admin can modfiy a product.
+JWT Access token needs to be passed in the Auth Header.
+
+### Query Parameters
+| Field | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | String | Id of product |
+
+
+## Delete a Product
+### Request 
+`DELETE /api/products/:id`\
+Access: Private \
+Only Admin can delete a product.
+JWT Access token needs to be passed in the Auth Header.
+
+### Query Parameters
+| Field | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | String | Id of product |
