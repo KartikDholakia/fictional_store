@@ -1,8 +1,9 @@
 /**
- * @desc Pagination Middleware
+ * @desc Pagination Middleware that can be used to paginate
+ * results in any of the routes.
  * @param model 
  * @returns async function that can be used in any route that 
- * requires pagination
+ * requires pagination.
  */
 const paginateResults = (model) => {
 	return async (req, res, next) => {

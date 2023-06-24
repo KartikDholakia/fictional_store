@@ -6,7 +6,7 @@ const Order = require('../models/orderModel');
 
 /**
  * @desc It iterates through objects in 'cart.products' array and 
- * calculates the total amount. 
+ * calculates the total amount to be paid. 
  * @param cart object
  * @returns number
  */
@@ -72,7 +72,7 @@ const placeOrder = asyncHandler(async (req, res) => {
 
 
 /**
- * @desc Fetch all orders
+ * @desc Fetch all orders in paginated form.
  * @route GET /api/order/?page=_&limit=
  * @public
  */

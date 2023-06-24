@@ -5,7 +5,7 @@ const Products = require('../models/productModel');
 /**
  * @desc Create a new Product
  * @route POST /api/prodcuts/
- * @private
+ * @private Only Admin can create a new product.
  */
 const createProdcut = asyncHandler(async (req, res) => {
 	const { name, description, category, price } = req.body;
@@ -36,7 +36,7 @@ const createProdcut = asyncHandler(async (req, res) => {
 
 
 /**
- * @desc Fetch all prodcuts. Pagination is applied
+ * @desc Fetch all prodcuts. Pagination is applied.
  * @route GET /api/products/?page=_&limit=_
  * @public
  */
@@ -50,8 +50,8 @@ const getAllProducts = asyncHandler(async (req, res) => {
 
 
 /**
- * @desc Search a product by name or category 
- * @route GET /api/products/search?name=__&category=
+ * @desc Search a product by name or category.
+ * @route GET /api/products/search?name=_&category=
  * @public
  */
 const searchProduct = asyncHandler(async (req, res) => {
@@ -80,7 +80,7 @@ const searchProduct = asyncHandler(async (req, res) => {
 /**
  * @desc Update a product
  * @route PUT /api/products/:id
- * @private
+ * @private Only Admin can modify a product.
  */
 const updateProduct = asyncHandler(async (req, res) => {
 	const product = await Products.findById(req.params.id);
@@ -104,7 +104,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 /**
  * @desc Delete a product
  * @route DELETE /api/products/:id
- * @private
+ * @private Only Admin can delete a product.
  */
 const deleteProduct = asyncHandler(async (req, res) => {
 	const product = await Products.findById(req.params.id);

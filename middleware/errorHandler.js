@@ -1,5 +1,12 @@
 const { constants } = require('../constants');
 
+/**
+ * Error Handler Middleware - To handle the error in asynchronous functions
+ * @param err Error object passed by async functions that run into error
+ * @param req Request object
+ * @param res Response object
+ * @param next NextFunction
+ */
 const errorHandler = (err, req, res, next) => {
 	const statusCode = res.statusCode ? res.statusCode : 500;
 

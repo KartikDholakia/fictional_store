@@ -4,7 +4,12 @@ const Users = require('../models/userModel');
 
 
 /**
- * Verify JWT Token to authenticate the user.
+ * Verify JWT Token to authenticate the user. After verifying the token, 
+ * function appends the decoded user information in request body. If the token
+ * is invalid, it will throw an error.
+ * @param req - request object
+ * @param res - response object
+ * @param next - NextFunction
  */
 const verifyToken = asyncHandler(async (req, res, next) => {
 	let token;
@@ -31,7 +36,7 @@ const verifyToken = asyncHandler(async (req, res, next) => {
 		}
 	}
 	else {
-		console.log("Line 34 verifyTokenHandler.js");
+		// console.log("Line 34 verifyTokenHandler.js");
 		res.status(401);
 		throw new Error("JWT Access Token is missing!!");
 	}
@@ -40,7 +45,10 @@ const verifyToken = asyncHandler(async (req, res, next) => {
 
 /**
  * Verify the JWT token and if the user is admin or not.
- * Only admin are allowed to Create, Update and Delete a product
+ * Only admin are allowed to Create, Update and Delete a product. 
+ * @param req - request object
+ * @param res - response object
+ * @param next - NextFunction
  */
 const verifyTokenAndAdmin = asyncHandler(async (req, res, next) => {	
 
