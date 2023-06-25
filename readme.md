@@ -92,9 +92,9 @@ Access: Public
 
 ### Response
 
-    {
-		"_id": "649684275301652b6652a487",
-  		"email": "harit@gmail.com"
+	{
+		"_id": "6497d6368461f584ef47e3e0",
+		"email": "kartik-second@gmail.com"
 	}
 
 ## Login
@@ -195,18 +195,35 @@ Gives paginated results
 			]
 		}
 	}
-
+The above response is truncated. There were 4 products in the response. 
+I have removed 2 of them to make it look concise.
 
 ## Search Products by name or category
 ### Request 
 `GET /api/products/search?name=_&category=-`\
-Access: Public \
+Access: Public 
 
 ### Query Parameters
 | Field | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `name` | String | Name of the product |
 | `category` | String | Category of the product |
+
+### Response
+	(URL: http://localhost:5001/api/products/search?category=Watch)
+	[
+		{
+			"_id": "64968e7c21f7fe1fcceadf97",
+			"name": "Helix Analog Watch",
+			"description": "Analog watches by Timex",
+			"category": "Watch",
+			"price": 1500,
+			"createdAt": "2023-06-24T06:34:36.086Z",
+			"updatedAt": "2023-06-24T06:34:36.086Z",
+			"__v": 0
+		}
+	]
+
 
 
 ## Update a Product
@@ -222,6 +239,21 @@ JWT Access token needs to be passed in the Auth Header.
 | `id` | String | Id of product |
 
 
+### Response
+	{
+		"message": "Product updated",
+		"Product": {
+			"_id": "649535ecf267be37f52740d8",
+			"name": "Test-Product-onlyAdmin",
+			"description": "test_Updated_by_admin",
+			"category": "Utility",
+			"price": 100,
+			"createdAt": "2023-06-23T06:04:28.586Z",
+			"updatedAt": "2023-06-25T06:17:01.777Z",
+			"__v": 0
+		}
+	}
+
 ## Delete a Product
 ### Request 
 `DELETE /api/products/:id`\
@@ -234,7 +266,10 @@ JWT Access token needs to be passed in the Auth Header.
 | :-------- | :------- | :------------------------- |
 | `id` | String | Id of product |
 
-
+### Response
+	{
+		"message": "Product 6497dcb0c8d57b35c7bff950 Deleted!!"
+	}
 
 ## CART
 #
@@ -245,6 +280,29 @@ JWT Access token needs to be passed in the Auth Header.
 `GET /api/cart/` \
 Access: Private \
 Only authorized user can view his own cart.
+
+### Response
+	[
+		{
+			"_id": "6495864c291e6b2862195c9f",
+			"userId": "649464ed5432164485760345",
+			"products": [
+			{
+				"prodcutId": "64953198b4cad1cc9cc97360",
+				"quantity": 2,
+				"_id": "6495864c291e6b2862195ca0"
+			},
+			{
+				"prodcutId": "6495276a2ae507a933f6de79",
+				"quantity": 1,
+				"_id": "6495869c291e6b2862195cab"
+			}
+			],
+			"createdAt": "2023-06-23T11:47:24.288Z",
+			"updatedAt": "2023-06-23T11:48:44.486Z",
+			"__v": 0
+		}
+	]
 
 ## Add to Cart
 
@@ -259,7 +317,34 @@ Only authorized user can add to his own cart.
 | `product_id` | String | *Required* |
 | `quantity` | Number | *Default: 1* |
 
-
+### Response
+	{
+		"message": "Cart Updated",
+		"updatedCart": {
+			"_id": "6495864c291e6b2862195c9f",
+			"userId": "649464ed5432164485760345",
+			"products": [
+			{
+				"prodcutId": "64953198b4cad1cc9cc97360",
+				"quantity": 2,
+				"_id": "6495864c291e6b2862195ca0"
+			},
+			{
+				"prodcutId": "6495276a2ae507a933f6de79",
+				"quantity": 1,
+				"_id": "6495869c291e6b2862195cab"
+			},
+			{
+				"prodcutId": "64968e7c21f7fe1fcceadf97",
+				"quantity": 1,
+				"_id": "6497ded2c8d57b35c7bff95e"
+			}
+			],
+			"createdAt": "2023-06-23T11:47:24.288Z",
+			"updatedAt": "2023-06-25T06:29:38.789Z",
+			"__v": 0
+		}
+	}
 
 ## ORDER
 #
@@ -276,6 +361,39 @@ The product items and quantity are taken from Cart collections. That is, when a 
 | :-------- | :------- | :------------------------- |
 | `address` | String | *Required* |
 
+### Response
+	{
+		"message": "Order Placed!",
+		"order_details": {
+			"userId": "649464ed5432164485760345",
+			"products": [
+			{
+				"prodcutId": "64953198b4cad1cc9cc97360",
+				"quantity": 2,
+				"_id": "6495864c291e6b2862195ca0"
+			},
+			{
+				"prodcutId": "6495276a2ae507a933f6de79",
+				"quantity": 1,
+				"_id": "6495869c291e6b2862195cab"
+			},
+			{
+				"prodcutId": "64968e7c21f7fe1fcceadf97",
+				"quantity": 1,
+				"_id": "6497ded2c8d57b35c7bff95e"
+			}
+			],
+			"amount": 21600,
+			"address": "Ghaziabad",
+			"status": "Pending",
+			"_id": "6497df45c8d57b35c7bff96e",
+			"createdAt": "2023-06-25T06:31:33.871Z",
+			"updatedAt": "2023-06-25T06:31:33.871Z",
+			"__v": 0
+		}
+	}
+
+Amount was automatically calculated by iterating through list of products.
 
 ## Fetch the list of all Orders
 
@@ -289,3 +407,64 @@ Gives paginated results.
 | :-------- | :------- | :------------------------- |
 | `page` | Number | Page Number |
 | `limit` | Number | Number of records per page |
+
+
+### Response
+	{
+		"pagination": {
+			"page": 1,
+			"totalPages": 1,
+			"count": 2,
+			"results": [
+			{
+				"_id": "649598a662a8e58f0edbf79d",
+				"userId": "649464ed5432164485760345",
+				"products": [
+				{
+					"prodcutId": "64953198b4cad1cc9cc97360",
+					"quantity": 2,
+					"_id": "6495864c291e6b2862195ca0"
+				},
+				{
+					"prodcutId": "6495276a2ae507a933f6de79",
+					"quantity": 1,
+					"_id": "6495869c291e6b2862195cab"
+				}
+				],
+				"amount": 20100,
+				"address": "Noida",
+				"status": "Pending",
+				"createdAt": "2023-06-23T13:05:42.211Z",
+				"updatedAt": "2023-06-23T13:05:42.211Z",
+				"__v": 0
+			},
+			{
+				"_id": "6497df45c8d57b35c7bff96e",
+				"userId": "649464ed5432164485760345",
+				"products": [
+				{
+					"prodcutId": "64953198b4cad1cc9cc97360",
+					"quantity": 2,
+					"_id": "6495864c291e6b2862195ca0"
+				},
+				{
+					"prodcutId": "6495276a2ae507a933f6de79",
+					"quantity": 1,
+					"_id": "6495869c291e6b2862195cab"
+				},
+				{
+					"prodcutId": "64968e7c21f7fe1fcceadf97",
+					"quantity": 1,
+					"_id": "6497ded2c8d57b35c7bff95e"
+				}
+				],
+				"amount": 21600,
+				"address": "Ghaziabad",
+				"status": "Pending",
+				"createdAt": "2023-06-25T06:31:33.871Z",
+				"updatedAt": "2023-06-25T06:31:33.871Z",
+				"__v": 0
+			}
+			]
+		}
+	}
