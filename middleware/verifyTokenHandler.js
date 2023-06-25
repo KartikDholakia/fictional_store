@@ -26,8 +26,6 @@ const verifyToken = asyncHandler(async (req, res, next) => {
 			req.user = decoded.user;
 			next();
 
-			console.log("Decoded access token user: ", req.user);
-			// console.log(req.user.id);
 		});
 
 		if (!token) {
@@ -36,7 +34,6 @@ const verifyToken = asyncHandler(async (req, res, next) => {
 		}
 	}
 	else {
-		// console.log("Line 34 verifyTokenHandler.js");
 		res.status(401);
 		throw new Error("JWT Access Token is missing!!");
 	}
@@ -62,7 +59,6 @@ const verifyTokenAndAdmin = asyncHandler(async (req, res, next) => {
 		// Fetch the isAdmin property from database:
 		const user = await Users.findById(req.user.id);
 		const isAdmin = user.isAdmin;
-		console.log(user);
 
 		if (isAdmin) {
 			next();

@@ -61,7 +61,6 @@ const addToCart = asyncHandler(async (req, res) => {
 			// update the quantity of that product, instead of adding new object
 
 			cart.products[productIndex].quantity = cart.products[productIndex].quantity + quantity;
-			console.log("Updated cart: ", cart);
 
 			const updatedCart = await Cart.findByIdAndUpdate(
 				cart._id,

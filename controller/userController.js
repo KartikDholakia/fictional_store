@@ -33,7 +33,6 @@ const registerUser = asyncHandler(async(req, res) => {
 		isAdmin
 	});
 
-	console.log("User created: ", user);
 	if (user) {
 		res.status(201).json({ _id: user.id, email: user.email });
 	} else {
@@ -73,7 +72,6 @@ const loginUser = asyncHandler(async(req, res) => {
 			{ expiresIn: '15m'}
 		);
 
-		console.log(accessToken);
 		res.status(200).json({ accessToken });
 	}
 	else {
@@ -81,7 +79,6 @@ const loginUser = asyncHandler(async(req, res) => {
 		throw new Error("Username or password is invalid!");
 	}
 
-	// res.json({ message: "Login user!"});
 });
 
 

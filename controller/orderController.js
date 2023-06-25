@@ -35,8 +35,6 @@ const calculateAmount = async (cart) => {
 const placeOrder = asyncHandler(async (req, res) => {
 	const { address } = req.body;
 
-	console.log("address: ", address);
-
 	// Check if address is provided:
 	if (!address) {
 		res.status(400);
@@ -46,8 +44,6 @@ const placeOrder = asyncHandler(async (req, res) => {
 	// Fetch the cart of logged-in user:
 	const cart = await Cart.findOne({ userId: req.user.id });
 
-	console.log(cart);
-
 	// if cart is empty:
 	if (!cart) {
 		res.status(400);
@@ -56,8 +52,6 @@ const placeOrder = asyncHandler(async (req, res) => {
 
 	// Find out total amount:
 	const totalAmount = await calculateAmount(cart);
-
-	console.log("amount: ", totalAmount);
 
 	// Create order object:
 	const newOrder = await Order.create({

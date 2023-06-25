@@ -52,7 +52,7 @@ const errorHandler = (err, req, res, next) => {
 			break;
 			
 		default:
-			console.log("No error! All good!!")
+			// console.log("No error! All good!!")
 			break;
 	}
 };
